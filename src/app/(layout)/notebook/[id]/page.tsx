@@ -1,22 +1,26 @@
 "use client";
 import Logo from "@/components/logo";
 import { Button } from "@/components/ui/button";
-import {
-  Dialog,
-  DialogContent,
-  DialogHeader,
-  DialogTitle,
-} from "@/components/ui/dialog";
-import { Textarea } from "@/components/ui/textarea";
+import { Dialog, DialogContent } from "@/components/ui/dialog";
 import {
   Clipboard,
   Copy,
   Dock,
+  DockIcon,
+  EllipsisVertical,
+  GraduationCap,
   HardDrive,
+  Info,
   Lightbulb,
   Link2,
+  NotepadText,
+  PanelLeft,
+  Plus,
   Search,
   Sliders,
+  Speaker,
+  TableOfContents,
+  TrendingUp,
   Upload,
 } from "lucide-react";
 import { useState } from "react";
@@ -47,7 +51,7 @@ export default function NotebookPage({ params }: { params: { id: string } }) {
   const [dialogOpen2, setDialogOpen2] = useState(false);
 
   return (
-    <>
+    <div className="grid grid-cols-4 gap-4 w-full h-full p-4">
       <Dialog open={dialogOpen} onOpenChange={setDialogOpen}>
         <DialogContent className="flex flex-col gap-4 px-10 max-w-5xl">
           <div className="flex justify-between items-center">
@@ -115,7 +119,7 @@ export default function NotebookPage({ params }: { params: { id: string } }) {
           </div>
 
           {/* Sources */}
-          <div className="grid grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
+          <div className="grid grid-cols-2 w-full lg:grid-cols-3 gap-4">
             <SourceCard
               icon={<HardDrive size={20} />}
               title="Google Drive"
@@ -200,7 +204,128 @@ export default function NotebookPage({ params }: { params: { id: string } }) {
           </div>
         </DialogContent>
       </Dialog>
-      <div>{params.id}</div>
-    </>
+      <div className="flex flex-col h-full w-full rounded-lg border gap-4">
+        <div className="border-b py-2 flex justify-between items-center gap-4 px-4">
+          <p className="font-semibold">Sources</p>
+          <Button variant={"ghost"} size={"icon"}>
+            <PanelLeft />
+          </Button>
+        </div>
+        <div className="grid grid-cols-2 w-full px-4 gap-4">
+          <Button
+            variant={"outline"}
+            className="flex rounded-full items-center gap-2"
+          >
+            <Plus />
+            <p>Add</p>
+          </Button>
+          <Button
+            variant={"outline"}
+            className="flex rounded-full items-center gap-2"
+          >
+            <Search />
+            <p>Discover</p>
+          </Button>
+        </div>
+      </div>
+
+      <div className="col-span-2 flex flex-col h-full w-full rounded-lg border gap-4">
+        <div className="border-b py-2 flex justify-between items-center gap-4 px-4">
+          <p className="font-semibold">Chat</p>
+        </div>
+      </div>
+      <div className="flex flex-col h-full w-full rounded-lg border gap-4">
+        <div className="border-b py-2 flex justify-between items-center gap-4 px-4">
+          <p className="font-semibold">Studio</p>
+          <Button variant={"ghost"} size={"icon"}>
+            <PanelLeft />
+          </Button>
+        </div>
+        <div className="flex flex-col gap-4 px-4 py-4 pb-8 border-b">
+          <div className="flex justify-between items-center gap-4">
+            <p className="font-semibold">Audio Overview</p>
+            <Button variant={"ghost"} size={"icon"}>
+              <Info />
+            </Button>
+          </div>
+          <div className="flex flex-col gap-6 w-full h-full">
+            <div className="flex gap-2 items-center">
+              <div className="p-4 rounded-full bg-secondary">
+                <Speaker />
+              </div>
+              <div className="flex flex-col gap-1 text-sm">
+                <p className="font-semibold">Deep Dive coversation </p>
+                <p>Two hosts (English only)</p>
+              </div>
+            </div>
+            <div className="grid grid-cols-2 items-center gap-2 w-full">
+              <Button variant={"outline"} className="w-full rounded-full">
+                Customize
+              </Button>
+              <Button variant={"default"} className="w-full rounded-full">
+                Generate
+              </Button>
+            </div>
+          </div>
+        </div>
+        <div className="flex flex-col gap-4 p-4">
+          <div className="flex justify-between items-center gap-4">
+            <p className="font-semibold">Notes</p>
+            <Button variant={"ghost"} size={"icon"}>
+              <EllipsisVertical />
+            </Button>
+          </div>
+
+          <div className="grid grid-cols-2 grid-rows-1 gap-4">
+            <Button
+              variant={"outline"}
+              className="col-span-2 flex rounded-full items-center gap-2"
+            >
+              <Plus />
+              <p>Add note</p>
+            </Button>
+            <Button
+              variant={"outline"}
+              className="flex rounded-full items-center gap-2"
+            >
+              <GraduationCap />
+              <p>Study guide</p>
+            </Button>
+            <Button
+              variant={"outline"}
+              className="flex rounded-full items-center gap-2"
+            >
+              <DockIcon />
+              <p>Briefing Doc</p>
+            </Button>
+            <Button
+              variant={"outline"}
+              className="flex rounded-full items-center gap-2"
+            >
+              <TableOfContents />
+              <p>FAQ</p>
+            </Button>
+            <Button
+              variant={"outline"}
+              className="flex rounded-full items-center gap-2"
+            >
+              <TrendingUp />
+              <p>Timeline</p>
+            </Button>
+          </div>
+
+          <div className="py-[50px] text-muted-foreground flex flex-col items-center justify-center h-full w-full">
+            <NotepadText size={40} />
+            <div className="flex items-center flex-col gap-1 py-4">
+              <p>Saved notes will appear here</p>
+              <p>
+                Save a chat message to create a new note or click Add note
+                above.
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
   );
 }

@@ -29,12 +29,12 @@ export default function NotebooksList() {
           <p>Create new</p>
         </Button>
         <div className="justify-between w-full lg:w-fit lg:justify-start flex items-center gap-2 cursor-pointer">
-          <div className="relative overflow-hidden flex items-center border rounded-full">
+          <div className="flex gap-2 items-center relative overflow-hidden border rounded-full">
             <div
               className={cn(
-                "p-3 flex items-center gap-2 transition-all duration-300 ease-in-out relative z-10",
+                "p-3 overflow-hidden  flex items-center gap-2 transition-all duration-300 ease-in-out z-10",
                 {
-                  "text-primary-foreground": view === "grid",
+                  "bg-secondary": view === "grid",
                 }
               )}
               onClick={() => setView("grid")}
@@ -49,7 +49,7 @@ export default function NotebooksList() {
               className={cn(
                 "p-3 flex items-center gap-2 transition-all duration-300 ease-in-out relative z-10",
                 {
-                  "text-primary-foreground": view === "list",
+                  "bg-secondary": view === "list",
                 }
               )}
               onClick={() => setView("list")}
@@ -59,13 +59,6 @@ export default function NotebooksList() {
               )}
               <Menu />
             </div>
-            <div
-              className={cn(
-                "absolute top-0 bottom-0 z-0 bg-muted transition-all duration-300 ease-in-out rounded-full",
-                view === "grid" ? "left-0" : "right-0"
-              )}
-              style={{ width: "50%" }}
-            />
           </div>
           <Select value={filter} onValueChange={setFilter}>
             <SelectTrigger>
