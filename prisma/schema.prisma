@@ -8,9 +8,65 @@ datasource db {
 }
 
 model User {
-  id        String   @id @default(uuid())
-  name      String
-  email     String   @unique
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  id             String     @id @default(uuid())
+  externalUserId String     @unique
+  name           String
+  email          String     @unique
+  notebooks      Notebook[]
+  createdAt      DateTime   @default(now())
+  updatedAt      DateTime   @updatedAt
+}
+
+model Notebook {
+  id           String        @id @default(uuid())
+  title        String
+  userId       String
+  user         User          @relation(fields: [userId], references: [id])
+  audio        Audio?
+  sources      Source[]
+  conversation Conversation?
+  createdAt    DateTime      @default(now())
+  updatedAt    DateTime      @updatedAt
+}
+
+model Conversation {
+  id         String   @id @default(uuid())
+  messages   Json
+  notebookId String   @unique
+  notebook   Notebook @relation(fields: [notebookId], references: [id])
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+}
+
+model Audio {
+  id         String   @id @default(uuid())
+  audioUrl   String
+  notebookId String   @unique
+  notebook   Notebook @relation(fields: [notebookId], references: [id])
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+}
+
+model Source {
+  id          String   @id @default(uuid())
+  name        String
+  fileType    String
+  textContent String   @default("")
+  contentUrl  String
+  notebookId  String
+  summary     Summary?
+  notebook    Notebook @relation(fields: [notebookId], references: [id])
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
+
+model Summary {
+  id          String   @id @default(uuid())
+  title       String
+  description String
+  keyTopics   String[]
+  sourceId    String   @unique
+  source      Source   @relation(fields: [sourceId], references: [id])
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
 }

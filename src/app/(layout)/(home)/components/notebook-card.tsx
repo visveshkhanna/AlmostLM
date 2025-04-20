@@ -4,14 +4,18 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
+import { Notebook } from "@/lib/types";
 import { getDeterministicGradient } from "@/lib/utils";
 import { EllipsisVertical, Pencil, Trash } from "lucide-react";
 import Link from "next/link";
 import { useMemo, useEffect, useState } from "react";
 
-export default function NotebookCard({ id }: { id: string }) {
+export default function NotebookCard({ notebook }: { notebook: Notebook }) {
   // Generate deterministic gradient based on notebook id
-  const gradient = useMemo(() => getDeterministicGradient(id), [id]);
+  const gradient = useMemo(
+    () => getDeterministicGradient(notebook.id),
+    [notebook.id]
+  );
   const [isLightMode, setIsLightMode] = useState(false);
 
   // Detect light/dark mode on the client side
@@ -33,7 +37,10 @@ export default function NotebookCard({ id }: { id: string }) {
   }, []);
 
   return (
-    <Link href={`/notebook/${id}`} className="group flex flex-col w-full">
+    <Link
+      href={`/notebook/${notebook.id}`}
+      className="group flex flex-col w-full"
+    >
       <div className="relative flex flex-col h-[220px] w-auto rounded-lg p-4 overflow-hidden">
         {/* Full coverage gradient with blur */}
         <div
@@ -87,8 +94,11 @@ export default function NotebookCard({ id }: { id: string }) {
             </DropdownMenu>
           </div>
           <div className="flex w-full flex-col gap-2">
-            <p className="text-xl text-white">Notebook Name</p>
-            <p className="text-sm text-white">11 Apr 2025 0 sources</p>
+            <p className="text-xl text-white">{notebook.title}</p>
+            <p className="text-sm text-white">
+              {new Date(notebook.createdAt).toLocaleDateString()}{" "}
+              {notebook._count.sources} sources
+            </p>
           </div>
         </div>
       </div>
