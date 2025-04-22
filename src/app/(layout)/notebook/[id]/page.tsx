@@ -88,7 +88,12 @@ export default function NotebookPage({
     fileType: string;
     contentUrl: string;
   } | null>(null);
-  const [sourceContent, setSourceContent] = useState<any>(null);
+  const [sourceContent, setSourceContent] = useState<{
+    title: string;
+    description: string;
+    keyTopics: string[];
+    textContent: string;
+  } | null>(null);
   const [isLoadingSource, setIsLoadingSource] = useState(false);
   const [isAddingSource, setIsAddingSource] = useState(false);
   const [sources, setSources] = useState<
@@ -201,8 +206,9 @@ export default function NotebookPage({
         sources: selectedSources.join(","),
       }),
     });
-    const data = await res.json();
-    await refetch();
+    if (res.ok) {
+      await refetch();
+    }
     setIsGeneratingAudio(false);
   };
 
