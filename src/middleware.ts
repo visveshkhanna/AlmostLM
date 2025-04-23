@@ -1,7 +1,7 @@
 import { clerkMiddleware } from "@clerk/nextjs/server";
 import { NextResponse } from "next/server";
 
-const IGNORED_PATHS = ["/api/webhooks/clerk"];
+const IGNORED_PATHS = ["/api/webhooks/clerk", "/"];
 
 export default clerkMiddleware(async (auth, request) => {
   if (IGNORED_PATHS.includes(request.nextUrl.pathname)) {

@@ -1,9 +1,13 @@
-import { UserButton } from "@clerk/nextjs";
+"use client";
+import { SignInButton, UserButton } from "@clerk/nextjs";
 import { Button } from "./ui/button";
 import { Video } from "lucide-react";
 import { ModeToggle } from "./dark-mode-toggle";
+import { useUser } from "@clerk/nextjs";
 
 export default function UserProfile() {
+  const { isSignedIn } = useUser();
+
   return (
     <div className="flex gap-4 items-center">
       <Button
@@ -14,7 +18,13 @@ export default function UserProfile() {
         <p>Watch Demo</p>
       </Button>
       <ModeToggle />
-      <UserButton />
+      {isSignedIn ? (
+        <UserButton />
+      ) : (
+        <SignInButton>
+          <Button>Sign In</Button>
+        </SignInButton>
+      )}
     </div>
   );
 }

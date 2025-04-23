@@ -14,7 +14,7 @@ export async function GET() {
   });
 
   if (!user) {
-    return Response.json({ error: "User not found" }, { status: 404 });
+    return Response.json({ error: "User not found" }, { status: 401 });
   }
 
   const notebooks = await db.notebook.findMany({

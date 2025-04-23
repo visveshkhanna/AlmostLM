@@ -18,7 +18,7 @@ export async function POST(req: Request) {
   });
 
   if (!user) {
-    return new Response("User not found", { status: 404 });
+    return new Response("User not found", { status: 401 });
   }
 
   const body = await req.json();
@@ -27,6 +27,17 @@ export async function POST(req: Request) {
   const notebookId = body.notebookId;
   const sources = body.sources.split(",");
   const query = body.query;
+
+  const notebook = await db.notebook.findUnique({
+    where: {
+      id: notebookId,
+      userId: user.id,
+    },
+  });
+
+  if (!notebook) {
+    return new Response("Notebook not found", { status: 404 });
+  }
 
   const results = await vectorStore.query({
     data: query,
@@ -42,8 +53,6 @@ export async function POST(req: Request) {
     includeData: true,
     includeMetadata: true,
   });
-
-  console.log("[results]", results);
 
   const result = streamText({
     model: openai("gpt-4o-mini"),

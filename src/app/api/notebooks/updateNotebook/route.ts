@@ -22,12 +22,13 @@ export async function PUT(req: Request) {
   });
 
   if (!user) {
-    return new Response("User not found", { status: 404 });
+    return new Response("User not found", { status: 401 });
   }
 
   const notebook = await db.notebook.findUnique({
     where: {
       id: notebookId as string,
+      userId: user.id,
     },
   });
 
@@ -42,7 +43,7 @@ export async function PUT(req: Request) {
   }
 
   await db.notebook.update({
-    where: { id: notebookId as string },
+    where: { id: notebookId as string, userId: user.id },
     data: { title: body.title },
   });
 

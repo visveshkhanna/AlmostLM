@@ -15,7 +15,7 @@ export async function POST() {
   });
 
   if (!user) {
-    return Response.json({ error: "User not found" }, { status: 404 });
+    return Response.json({ error: "User not found" }, { status: 401 });
   }
 
   const notebook = await db.notebook.create({

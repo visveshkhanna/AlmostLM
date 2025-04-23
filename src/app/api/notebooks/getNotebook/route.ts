@@ -22,7 +22,7 @@ export async function GET(req: Request) {
   });
 
   if (!user) {
-    return new Response("User not found", { status: 404 });
+    return new Response("User not found", { status: 401 });
   }
 
   if (!notebookId) {
@@ -30,7 +30,7 @@ export async function GET(req: Request) {
   }
 
   const notebook = await db.notebook.findUnique({
-    where: { id: notebookId },
+    where: { id: notebookId, userId: user.id },
     select: {
       title: true,
       sources: true,

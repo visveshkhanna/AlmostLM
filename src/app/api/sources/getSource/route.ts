@@ -20,7 +20,7 @@ export async function GET(req: Request) {
   });
 
   if (!user) {
-    return new Response("User not found", { status: 404 });
+    return new Response("User not found", { status: 401 });
   }
 
   const source = await db.source.findUnique({

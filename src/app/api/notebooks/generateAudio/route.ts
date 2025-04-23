@@ -22,7 +22,7 @@ export async function POST(req: Request) {
   });
 
   if (!user) {
-    return new Response("User not found", { status: 404 });
+    return new Response("User not found", { status: 401 });
   }
 
   const notebook = await db.notebook.findUnique({
@@ -87,8 +87,6 @@ export async function POST(req: Request) {
   const content = `${conversation.conversation
     .map((c) => `Speaker ${c.speaker}: ${c.content}`)
     .join("\n")}`;
-
-  console.log(content);
 
   const result = await fal.subscribe("fal-ai/playai/tts/dialog", {
     input: {
