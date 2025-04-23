@@ -2,7 +2,7 @@ import { db } from "@/lib/postgres/db";
 import { vectorStore } from "@/lib/postgres/upstash";
 import { auth } from "@clerk/nextjs/server";
 import { streamText } from "ai";
-import { openai } from "@ai-sdk/openai";
+import { openaiAiSDK } from "@/lib/openai";
 
 export async function POST(req: Request) {
   const { userId } = await auth();
@@ -55,7 +55,7 @@ export async function POST(req: Request) {
   });
 
   const result = streamText({
-    model: openai("gpt-4o-mini"),
+    model: openaiAiSDK("meta-llama/llama-3-70b-instruct"),
     messages: [
       {
         role: "system",

@@ -1,5 +1,12 @@
+import { createOpenAI } from "@ai-sdk/openai";
 import { OpenAI } from "openai";
 
 export const openai = new OpenAI({
-  apiKey: process.env.OPENAI_API_KEY,
+  baseURL: process.env.NOVITA_API_URL,
+  apiKey: process.env.NOVITA_API_KEY,
+});
+
+export const openaiAiSDK = createOpenAI({
+  baseURL: process.env.NOVITA_API_URL,
+  apiKey: process.env.NOVITA_API_KEY,
 });

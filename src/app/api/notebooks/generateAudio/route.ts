@@ -62,7 +62,7 @@ export async function POST(req: Request) {
   });
 
   const response = await openai.beta.chat.completions.parse({
-    model: "gpt-4o-mini",
+    model: "meta-llama/llama-3-70b-instruct",
     messages: [
       {
         role: "system",
